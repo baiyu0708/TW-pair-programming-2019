@@ -16,7 +16,7 @@ public class BoardDisplayPanelTest {
 
         JFrame window = new JFrame();
         window.setSize(640, 480);
-        window.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.add(boardDisplayPanel);
         window.setVisible(true);
 
