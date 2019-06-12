@@ -49,13 +49,13 @@ public class Repeater {
                     return;
                 }
                 task.run();
-
                 loopUntilInterrupted();
             });
             timer.start();
         } else {
             task.run();
-            loopUntilInterrupted();
+            timer = new Thread(this::loopUntilInterrupted);
+            timer.start();
         }
     }
 
