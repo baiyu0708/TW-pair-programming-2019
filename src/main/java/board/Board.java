@@ -1,6 +1,6 @@
 package board;
 
-class Board {
+public class Board {
 
     /**
      * 行主序。元素[row][column]表示第row行、第column列的细胞，0-死，1-活
@@ -8,7 +8,7 @@ class Board {
      */
     private int[][] state;
 
-    Board(int[][] initialState) {
+    public Board(int[][] initialState) {
         state = initialState;
     }
 
@@ -58,11 +58,15 @@ class Board {
         return state[row][column];
     }
 
-    private int rowCount() {
+    public boolean isLiving(int row, int column) {
+        return state(row, column) == 1;
+    }
+
+    public int rowCount() {
         return state.length;
     }
 
-    private int columnCount() {
+    public int columnCount() {
         return state[0].length;
     }
 }
