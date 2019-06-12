@@ -1,7 +1,7 @@
 package ui.load;
 
 @FunctionalInterface
-public interface OnSelectImage {
+public interface OnSelectBoard {
 
     void onSelect(BoardDesc board);
 }

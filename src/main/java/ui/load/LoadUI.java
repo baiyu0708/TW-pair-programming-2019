@@ -12,11 +12,10 @@ import java.util.ArrayList;
 
 class LoadUI extends JPanel {
 
-    LoadUI(File boardsDir) throws IOException {
-        setLayout(new BorderLayout());
 
-        SelectPanel selectPanel = new SelectPanel(loadImages(boardsDir));
-        add(selectPanel);
+    LoadUI(File boardsDir, OnSelectBoard onSelectBoard) throws IOException {
+        setLayout(new BorderLayout());
+        add(new SelectPanel(loadImages(boardsDir), onSelectBoard));
     }
 
     private ArrayList<BoardDesc> loadImages(File boardsDir) throws IOException {

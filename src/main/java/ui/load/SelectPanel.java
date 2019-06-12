@@ -15,13 +15,13 @@ class SelectPanel extends JPanel {
 
     private int startIndex = 0;
 
-    SelectPanel(List<BoardDesc> items) {
+    SelectPanel(List<BoardDesc> items, OnSelectBoard onSelectBoard) {
         this.items = new ArrayList<>(items);
 
         setLayout(new GridLayout(BOARD_COUNT_PER_ROW, BOARD_COUNT_PER_PAGE / BOARD_COUNT_PER_ROW, 5, 5));
         boardItemPanels = new BoardItemPanel[BOARD_COUNT_PER_PAGE];
         for (int i = 0; i < BOARD_COUNT_PER_PAGE; i++) {
-            boardItemPanels[i] = new BoardItemPanel();
+            boardItemPanels[i] = new BoardItemPanel(onSelectBoard);
             add(boardItemPanels[i]);
         }
 

@@ -11,10 +11,15 @@ class BoardItemPanel extends JPanel {
     private final BoardDisplayPanel boardDisplayPanel = new BoardDisplayPanel();
     private final JButton button = new JButton();
 
-    BoardItemPanel() {
+    private BoardDesc board;
+
+    BoardItemPanel(OnSelectBoard onSelectBoard) {
+
         setLayout(new BorderLayout());
         add(boardDisplayPanel);
         add(button, BorderLayout.SOUTH);
+
+        button.addActionListener(event -> onSelectBoard.onSelect(board));
     }
 
     void set(@Nullable BoardDesc board) {
@@ -22,6 +27,7 @@ class BoardItemPanel extends JPanel {
             boardDisplayPanel.display(board.board);
             button.setText(board.name);
             button.setEnabled(true);
+            this.board = board;
         } else {
             boardDisplayPanel.display(null);
             button.setText("（无）");

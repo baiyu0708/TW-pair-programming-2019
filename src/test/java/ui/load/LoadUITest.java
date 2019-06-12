@@ -9,7 +9,7 @@ public class LoadUITest {
 
     public static void main(String[] args) throws IOException {
         CodeDir root = new CodeDir(CodeDir.MAVEN_TEST);
-        LoadUI loadUI = new LoadUI(root.child("boards"));
+        LoadUI loadUI = new LoadUI(root.child("boards"), board -> System.out.println(board.name));
 
         JFrame window = new JFrame();
         window.setSize(640, 480);
