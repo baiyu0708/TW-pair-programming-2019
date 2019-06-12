@@ -34,7 +34,7 @@ public class BoardTest {
     }
 
     @Test
-    public void dead_cell_with_2_neighbours_will_die(){
+    public void dead_cell_with_2_neighbours_will_die() {
         Board board = new Board(new int[][]{
                 {1, 0, 1},
                 {0, 0, 0},
@@ -60,7 +60,7 @@ public class BoardTest {
     }
 
     @Test
-    public void dead_cell_with_3_neighbours_will_live(){
+    public void dead_cell_with_3_neighbours_will_live() {
         Board board = new Board(new int[][]{
                 {1, 0, 1},
                 {0, 0, 0},
@@ -86,7 +86,7 @@ public class BoardTest {
     }
 
     @Test
-    public void dead_cell_with_less_than_2_neighbours_will_die(){
+    public void dead_cell_with_less_than_2_neighbours_will_die() {
         Board board = new Board(new int[][]{
                 {1, 0, 0},
                 {0, 0, 0},
@@ -112,7 +112,7 @@ public class BoardTest {
     }
 
     @Test
-    public void dead_cell_with_more_than_3_neighbours_will_die(){
+    public void dead_cell_with_more_than_3_neighbours_will_die() {
         Board board = new Board(new int[][]{
                 {1, 0, 1},
                 {0, 0, 1},
@@ -122,5 +122,22 @@ public class BoardTest {
         board.evolve();
 
         assertEquals(0, board.state()[1][1]);
+    }
+
+    @Test
+    public void border() {
+        Board board = new Board(new int[][]{
+                {1, 0, 1},
+                {0, 0, 0},
+                {0, 0, 1}
+        });
+
+        board.evolve();
+
+        assertArrayEquals(new int[][]{
+                {0, 0, 0},
+                {0, 1, 0},
+                {0, 0, 0},
+        }, board.state());
     }
 }
