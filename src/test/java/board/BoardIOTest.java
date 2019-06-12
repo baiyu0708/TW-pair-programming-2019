@@ -17,13 +17,13 @@ public class BoardIOTest {
         CodeDir root = new CodeDir(CodeDir.MAVEN_TEST);
         BufferedImage image = ImageIO.read(root.child("state.png"));
 
-        int[][] state = BoardIO.readState(image);
+        Board board = BoardIO.readState(image);
 
         assertArrayEquals(new int[][]{
                 {0, 0, 0, 0},
                 {0, 1, 1, 1},
                 {1, 1, 1, 0},
                 {0, 0, 0, 0}
-        }, state);
+        }, board.state());
     }
 }

@@ -1,17 +1,18 @@
 package ui.load;
 
+import board.Board;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.image.BufferedImage;
 
-class BoardItem {
+class BoardDesc {
 
     @Nullable
-    final BufferedImage image;
+    final Board board;
     final String name;
 
-    BoardItem(@Nullable BufferedImage image, String name) {
-        this.image = image;
+    BoardDesc(@Nullable Board board, String name) {
+        this.board = board;
         this.name = name;
     }
 }

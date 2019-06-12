@@ -10,12 +10,12 @@ class SelectPanel extends JPanel {
     private static final int BOARD_COUNT_PER_PAGE = 10;
     private static final int BOARD_COUNT_PER_ROW = 2;
 
-    private final ArrayList<BoardItem> items;
+    private final ArrayList<BoardDesc> items;
     private final BoardItemPanel[] boardItemPanels;
 
     private int startIndex = 0;
 
-    SelectPanel(List<BoardItem> items) {
+    SelectPanel(List<BoardDesc> items) {
         this.items = new ArrayList<>(items);
 
         setLayout(new GridLayout(BOARD_COUNT_PER_ROW, BOARD_COUNT_PER_PAGE / BOARD_COUNT_PER_ROW, 5, 5));
