@@ -1,7 +1,6 @@
 package util.timer;
 
 import java.time.Duration;
-import java.util.TimerTask;
 
 /**
  * 周期性执行任务
@@ -14,10 +13,8 @@ public class Repeater {
     private final Runnable task;
     private Duration interval;
 
-    private java.util.Timer timer;
-    private long latestRunTimeMs;
-
-    private boolean running = false;
+    private long startTimeMs;
+    private Thread timer;
 
     public Repeater(Runnable task, Duration interval) {
         this.task = task;
@@ -25,64 +22,69 @@ public class Repeater {
     }
 
     public void start(boolean executeImmediately) {
-        running = true;
-        timer = new java.util.Timer();
-
         if (executeImmediately) {
-            Repeater.this.run();
+            task.run();
         }
-        delayExecute(interval);
+        startTimeMs = System.currentTimeMillis();
+
+        timer = new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(interval.toMillis());
+                } catch (InterruptedException e) {
+                    break;
+                }
+                task.run();
+                startTimeMs = System.currentTimeMillis();
+            }
+        });
+        timer.start();
     }
 
     public void stop() {
-        running = false;
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                timer.cancel();
-            }
-        }, 0);
+        timer.interrupt();
     }
 
     public void setInterval(Duration newInterval) {
+        timer.interrupt();
         this.interval = newInterval;
 
-        if (running) {
-            stop();
-            timer = new java.util.Timer();
+        long durationSinceStartMs = System.currentTimeMillis() - startTimeMs;
+        long remainingIntervalMs = newInterval.toMillis() - durationSinceStartMs;
 
-            long durationMs = System.currentTimeMillis() - latestRunTimeMs;
-            if (durationMs < newInterval.toMillis()) {
-                delayExecute(Duration.ofMillis(newInterval.toMillis() - durationMs), newInterval);
-            } else {
-                run();
-                delayExecute(newInterval);
+        if (remainingIntervalMs > 0) {
+            timer = new Thread(() -> {
+                try {
+                    Thread.sleep(remainingIntervalMs);
+                } catch (InterruptedException e) {
+                    return;
+                }
+                startTimeMs = System.currentTimeMillis();
+
+                while (true) {
+                    try {
+                        Thread.sleep(interval.toMillis());
+                    } catch (InterruptedException e) {
+                        break;
+                    }
+                    task.run();
+                    startTimeMs = System.currentTimeMillis();
+                }
+            });
+            timer.start();
+        } else {
+            task.run();
+            startTimeMs = System.currentTimeMillis();
+
+            while (true) {
+                try {
+                    Thread.sleep(interval.toMillis());
+                } catch (InterruptedException e) {
+                    break;
+                }
+                task.run();
+                startTimeMs = System.currentTimeMillis();
             }
         }
-    }
-
-    private void delayExecute(Duration delay) {
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                Repeater.this.run();
-                delayExecute(delay);
-            }
-        }, delay.toMillis());
-    }
-
-    private void delayExecute(Duration firstDelay, Duration followingDelay) {
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                Repeater.this.run();
-                delayExecute(followingDelay);
-            }
-        }, firstDelay.toMillis());
-    }
-
-    private void run() {
-        latestRunTimeMs = System.currentTimeMillis();
-        task.run();
     }
 }
