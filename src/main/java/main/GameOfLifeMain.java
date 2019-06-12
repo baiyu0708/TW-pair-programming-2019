@@ -10,7 +10,7 @@ import java.io.IOException;
 public class GameOfLifeMain {
 
     public static void main(String[] args) throws IOException {
-        UIFonts.setAll(new Font("微软雅黑", Font.PLAIN, 16));
+        UIFonts.setAll(new Font("微软雅黑", Font.PLAIN, 24));
         new GameOfLifeApp(new File("boards"));
     }
 }

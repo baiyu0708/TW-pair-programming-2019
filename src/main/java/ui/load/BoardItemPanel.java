@@ -19,6 +19,7 @@ class BoardItemPanel extends JPanel {
         add(boardDisplayPanel);
         add(button, BorderLayout.SOUTH);
 
+        boardDisplayPanel.setCellClickListener(point -> onSelectBoard.accept(board));
         button.addActionListener(event -> onSelectBoard.accept(board));
     }
 
