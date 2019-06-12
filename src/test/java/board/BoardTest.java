@@ -71,4 +71,56 @@ public class BoardTest {
 
         assertEquals(1, board.state()[1][1]);
     }
+
+    @Test
+    public void living_cell_with_less_than_2_neighbours_will_die() {
+        Board board = new Board(new int[][]{
+                {1, 0, 0},
+                {0, 1, 0},
+                {0, 0, 0}
+        });
+
+        board.evolve();
+
+        assertEquals(0, board.state()[1][1]);
+    }
+
+    @Test
+    public void dead_cell_with_less_than_2_neighbours_will_die(){
+        Board board = new Board(new int[][]{
+                {1, 0, 0},
+                {0, 0, 0},
+                {0, 0, 0}
+        });
+
+        board.evolve();
+
+        assertEquals(0, board.state()[1][1]);
+    }
+
+    @Test
+    public void living_cell_with_more_than_3_neighbours_will_die() {
+        Board board = new Board(new int[][]{
+                {1, 0, 1},
+                {0, 1, 1},
+                {0, 0, 1}
+        });
+
+        board.evolve();
+
+        assertEquals(0, board.state()[1][1]);
+    }
+
+    @Test
+    public void dead_cell_with_more_than_3_neighbours_will_die(){
+        Board board = new Board(new int[][]{
+                {1, 0, 1},
+                {0, 0, 1},
+                {0, 0, 1}
+        });
+
+        board.evolve();
+
+        assertEquals(0, board.state()[1][1]);
+    }
 }
