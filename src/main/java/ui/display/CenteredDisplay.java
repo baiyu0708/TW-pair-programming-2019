@@ -1,4 +1,4 @@
-package ui;
+package ui.display;
 
 import java.awt.*;
 

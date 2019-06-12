@@ -2,6 +2,9 @@ package board;
 
 public class Board {
 
+    static final int LIVING = 1;
+    static final int DEAD = 0;
+
     /**
      * 行主序。元素[row][column]表示第row行、第column列的细胞，0-死，1-活
      * 如果不在board范围内（即越界），则必然为死
@@ -29,17 +32,17 @@ public class Board {
     }
 
     private int nextState(int row, int column) {
-        boolean isAlive = state(row, column) == 1;
+        boolean isAlive = isLiving(row, column);
 
         if (isAlive && neighbourCount(row, column) == 2) {
             return state(row, column);
         }
 
         if (neighbourCount(row, column) == 3) {
-            return 1;
+            return LIVING;
         }
 
-        return 0;
+        return DEAD;
     }
 
     private int neighbourCount(int row, int column) {
@@ -50,16 +53,16 @@ public class Board {
 
     private int state(int row, int column) {
         if (row < 0 || row >= rowCount()) {
-            return 0;
+            return DEAD;
         }
         if (column < 0 || column >= columnCount()) {
-            return 0;
+            return DEAD;
         }
         return state[row][column];
     }
 
     public boolean isLiving(int row, int column) {
-        return state(row, column) == 1;
+        return state(row, column) == LIVING;
     }
 
     public int rowCount() {
