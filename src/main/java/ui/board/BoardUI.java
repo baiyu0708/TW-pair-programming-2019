@@ -13,6 +13,8 @@ import java.time.Duration;
 
 public class BoardUI extends JPanel {
 
+    private static final float INITIAL_UPDATE_INTERVAL_SEC = 0.5f;
+
     private final BoardDisplayPanel boardDisplayPanel = new BoardDisplayPanel();
     @Nullable // 当用户还没有选择要显示的board时，该字段为null
     private Board board;
@@ -26,14 +28,14 @@ public class BoardUI extends JPanel {
         add(createControlPanel(), BorderLayout.EAST);
 
         boardDisplayPanel.setCellClickListener(this::flipCell);
-        updateRepeater = new Repeater(this::update, Duration.ofMillis(500));
+        updateRepeater = new Repeater(this::update, Duration.ofMillis((long) (INITIAL_UPDATE_INTERVAL_SEC * 1000)));
     }
 
     private JPanel createControlPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new VFlowLayout());
 
-        panel.add(new JLabel("播放速率（秒）："));
+        panel.add(new JLabel("更新间隔（秒）："));
         panel.add(playRateSpinner());
         panel.add(playStopButton());
 
@@ -41,8 +43,9 @@ public class BoardUI extends JPanel {
     }
 
     private JSpinner playRateSpinner() {
-        JSpinner spinner = new JSpinner(new SpinnerNumberModel(1f, 0.09f, 10f, 0.1f));
+        JSpinner spinner = new JSpinner(new SpinnerNumberModel(INITIAL_UPDATE_INTERVAL_SEC, 0.09f, 10f, 0.1f));
         spinner.addChangeListener(e -> {
+            System.out.println("1");
             Duration interval = Duration.ofMillis((long) ((double) spinner.getValue() * 1000));
             updateRepeater.setInterval(interval);
         });
