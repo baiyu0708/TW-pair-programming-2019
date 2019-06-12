@@ -13,6 +13,7 @@ public class BoardDisplayPanelTest {
                 {1, 0, 1, 1}
         });
         BoardDisplayPanel boardDisplayPanel = new BoardDisplayPanel();
+        boardDisplayPanel.setCellClickListener(System.out::println);
 
         JFrame window = new JFrame();
         window.setSize(640, 480);
