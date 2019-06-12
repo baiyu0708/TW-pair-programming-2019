@@ -9,6 +9,9 @@ import java.awt.image.BufferedImage;
 
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 
+/**
+ * 居中显示{@link Board}的状态
+ */
 class BoardDisplayPanel extends JPanel {
 
     private static final Color DEAD_CELL_COLOR = Color.white;
@@ -40,6 +43,12 @@ class BoardDisplayPanel extends JPanel {
         if (image == null) {
             return;
         }
-        g.drawImage(image, 0, 0, 500, 500, null);
+
+        @SuppressWarnings("ConstantConditions")
+        Rectangle displayArea = CenteredDisplay.getDisplayArea(
+                new Dimension(image.getWidth(), image.getHeight()),
+                new Dimension(getWidth(), getHeight())
+        );
+        g.drawImage(image, displayArea.x, displayArea.y, displayArea.width, displayArea.height, null);
     }
 }
