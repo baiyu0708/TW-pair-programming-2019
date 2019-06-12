@@ -32,4 +32,43 @@ public class BoardTest {
 
         assertEquals(1, board.state()[1][1]);
     }
+
+    @Test
+    public void dead_cell_with_2_neighbours_will_die(){
+        Board board = new Board(new int[][]{
+                {1, 0, 1},
+                {0, 0, 0},
+                {0, 0, 0}
+        });
+
+        board.evolve();
+
+        assertEquals(0, board.state()[1][1]);
+    }
+
+    @Test
+    public void living_cell_with_3_neighbours_will_live() {
+        Board board = new Board(new int[][]{
+                {1, 0, 1},
+                {0, 1, 0},
+                {0, 0, 1}
+        });
+
+        board.evolve();
+
+        assertEquals(1, board.state()[1][1]);
+    }
+
+    @Test
+    public void dead_cell_with_3_neighbours_will_live(){
+        Board board = new Board(new int[][]{
+                {1, 0, 1},
+                {0, 0, 0},
+                {0, 0, 1}
+        });
+
+        board.evolve();
+
+        assertEquals(1, board.state()[1][1]);
+    }
 }

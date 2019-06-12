@@ -30,9 +30,15 @@ class Board {
 
     private int nextState(int row, int column) {
         boolean isAlive = state(row, column) == 1;
+
         if (isAlive && neighbourCount(row, column) == 2) {
             return state(row, column);
         }
+
+        if (neighbourCount(row, column) == 3) {
+            return 1;
+        }
+
         return 0;
     }
 
