@@ -25,6 +25,7 @@ public class BoardUI extends JPanel {
         add(boardDisplayPanel);
         add(createControlPanel(), BorderLayout.EAST);
 
+        boardDisplayPanel.setCellClickListener(this::flipCell);
         updateRepeater = new Repeater(this::update, Duration.ofMillis(500));
     }
 
@@ -71,6 +72,15 @@ public class BoardUI extends JPanel {
             return;
         }
         board.evolve();
+        boardDisplayPanel.display(board);
+    }
+
+    private void flipCell(Point point) {
+        if (board == null) {
+            return;
+        }
+
+        board.flip(point.y, point.x);
         boardDisplayPanel.display(board);
     }
 

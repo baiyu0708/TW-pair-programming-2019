@@ -31,6 +31,10 @@ public class Board {
         state = newState;
     }
 
+    public void flip(int row, int column) {
+        state[row][column] = isLiving(row, column) ? DEAD : LIVING;
+    }
+
     private int nextState(int row, int column) {
         boolean isAlive = isLiving(row, column);
 

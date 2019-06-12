@@ -125,7 +125,7 @@ public class BoardTest {
     }
 
     @Test
-    public void border() {
+    public void boundary() {
         Board board = new Board(new int[][]{
                 {1, 0, 1},
                 {0, 0, 0},
@@ -137,7 +137,24 @@ public class BoardTest {
         assertArrayEquals(new int[][]{
                 {0, 0, 0},
                 {0, 1, 0},
+                {0, 0, 0}
+        }, board.state());
+    }
+
+    @Test
+    public void flip() {
+        Board board = new Board(new int[][]{
+                {1, 0, 1},
                 {0, 0, 0},
+                {0, 0, 1}
+        });
+
+        board.flip(1, 2);
+
+        assertArrayEquals(new int[][]{
+                {1, 0, 1},
+                {0, 0, 1},
+                {0, 0, 1}
         }, board.state());
     }
 }
