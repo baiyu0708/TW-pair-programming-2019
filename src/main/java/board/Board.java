@@ -16,7 +16,7 @@ public class Board {
         return state;
     }
 
-    void evolve() {
+    public void evolve() {
         int[][] newState = new int[rowCount()][columnCount()];
 
         for (int row = 0; row < rowCount(); row++) {
