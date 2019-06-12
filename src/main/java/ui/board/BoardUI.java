@@ -45,7 +45,6 @@ public class BoardUI extends JPanel {
     private JSpinner playRateSpinner() {
         JSpinner spinner = new JSpinner(new SpinnerNumberModel(INITIAL_UPDATE_INTERVAL_SEC, 0.09f, 10f, 0.1f));
         spinner.addChangeListener(e -> {
-            System.out.println("1");
             Duration interval = Duration.ofMillis((long) ((double) spinner.getValue() * 1000));
             updateRepeater.setInterval(interval);
         });
