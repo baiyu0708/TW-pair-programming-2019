@@ -1,10 +1,8 @@
 package ui.display;
 
 import board.Board;
-import ui.display.BoardUI;
 
 import javax.swing.*;
-import java.time.Duration;
 
 public class BoardUITest {
 
@@ -24,8 +22,5 @@ public class BoardUITest {
         window.setVisible(true);
 
         boardUI.setBoard(board);
-
-        Thread.sleep(5000);
-        boardUI.setUpdateInterval(Duration.ofMillis(2000)); // 允许动态变更间隔
     }
 }
