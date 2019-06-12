@@ -1,7 +1,7 @@
 package ui.load;
 
 import org.jetbrains.annotations.Nullable;
-import ui.BoardDisplayPanel;
+import ui.common.BoardDisplayPanel;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package ui;
+package ui.common;
 
 import board.Board;
 import org.jetbrains.annotations.Nullable;

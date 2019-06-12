@@ -1,7 +1,7 @@
-package ui;
+package ui.common;
 
 import board.Board;
-import ui.BoardDisplayPanel;
+import ui.common.BoardDisplayPanel;
 
 import javax.swing.*;
 

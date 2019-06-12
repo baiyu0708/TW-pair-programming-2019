@@ -1,7 +1,9 @@
 package ui.load;
 
+import org.jetbrains.annotations.NotNull;
+
 @FunctionalInterface
 public interface OnSelectBoard {
 
-    void onSelect(BoardDesc board);
+    void onSelect(@NotNull BoardDesc board);
 }

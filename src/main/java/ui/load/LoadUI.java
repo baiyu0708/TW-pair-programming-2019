@@ -10,10 +10,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-class LoadUI extends JPanel {
+public class LoadUI extends JPanel {
 
-
-    LoadUI(File boardsDir, OnSelectBoard onSelectBoard) throws IOException {
+    public LoadUI(File boardsDir, OnSelectBoard onSelectBoard) throws IOException {
         setLayout(new BorderLayout());
         add(new SelectPanel(loadImages(boardsDir), onSelectBoard));
     }
@@ -27,7 +26,7 @@ class LoadUI extends JPanel {
         ArrayList<BoardDesc> images = new ArrayList<>(imageFiles.length);
         images.add(new BoardDesc(emptyBoard(), "新建"));
         for (File file : imageFiles) {
-            images.add(loadImageOrNull(file));
+            images.add(loadOrNull(file));
         }
         return images;
     }
@@ -36,7 +35,7 @@ class LoadUI extends JPanel {
         return new Board(new int[5][5]);
     }
 
-    private static BoardDesc loadImageOrNull(File file) {
+    private static BoardDesc loadOrNull(File file) {
         try {
             return new BoardDesc(BoardIO.readState(ImageIO.read(file)), file.getName());
         } catch (IOException e) {

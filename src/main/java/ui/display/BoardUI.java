@@ -3,13 +3,13 @@ package ui.display;
 import board.Board;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ui.BoardDisplayPanel;
+import ui.common.BoardDisplayPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.Duration;
 
-class BoardUI extends JPanel {
+public class BoardUI extends JPanel {
 
     private Duration updateInterval = Duration.ofSeconds(1);
 
@@ -17,7 +17,7 @@ class BoardUI extends JPanel {
     @Nullable // 当用户还没有选择要显示的board时，该字段为null
     private Board board;
 
-    BoardUI() {
+    public BoardUI() {
         setLayout(new BorderLayout());
         add(boardDisplayPanel);
 
@@ -39,7 +39,7 @@ class BoardUI extends JPanel {
         }).start();
     }
 
-    void setBoard(@NotNull Board board) {
+    public void setBoard(@NotNull Board board) {
         this.board = board;
         boardDisplayPanel.display(board);
     }
