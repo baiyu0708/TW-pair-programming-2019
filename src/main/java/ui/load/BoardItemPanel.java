@@ -5,6 +5,7 @@ import ui.common.BoardDisplayPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.function.Consumer;
 
 class BoardItemPanel extends JPanel {
 
@@ -13,13 +14,12 @@ class BoardItemPanel extends JPanel {
 
     private BoardDesc board;
 
-    BoardItemPanel(OnSelectBoard onSelectBoard) {
-
+    BoardItemPanel(Consumer<BoardDesc> onSelectBoard) {
         setLayout(new BorderLayout());
         add(boardDisplayPanel);
         add(button, BorderLayout.SOUTH);
 
-        button.addActionListener(event -> onSelectBoard.onSelect(board));
+        button.addActionListener(event -> onSelectBoard.accept(board));
     }
 
     void set(@Nullable BoardDesc board) {

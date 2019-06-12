@@ -1,6 +1,6 @@
 package app;
 
-import ui.display.BoardUI;
+import ui.board.BoardUI;
 import ui.load.BoardDesc;
 import ui.load.LoadUI;
 

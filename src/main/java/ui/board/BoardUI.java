@@ -1,4 +1,4 @@
-package ui.display;
+package ui.board;
 
 import board.Board;
 import org.jetbrains.annotations.NotNull;

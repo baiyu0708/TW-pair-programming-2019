@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 class SelectPanel extends JPanel {
 
@@ -15,7 +16,7 @@ class SelectPanel extends JPanel {
 
     private int startIndex = 0;
 
-    SelectPanel(List<BoardDesc> items, OnSelectBoard onSelectBoard) {
+    SelectPanel(List<BoardDesc> items, Consumer<BoardDesc> onSelectBoard) {
         this.items = new ArrayList<>(items);
 
         setLayout(new GridLayout(BOARD_COUNT_PER_ROW, BOARD_COUNT_PER_PAGE / BOARD_COUNT_PER_ROW, 5, 5));

@@ -9,10 +9,11 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 public class LoadUI extends JPanel {
 
-    public LoadUI(File boardsDir, OnSelectBoard onSelectBoard) throws IOException {
+    public LoadUI(File boardsDir, Consumer<BoardDesc> onSelectBoard) throws IOException {
         setLayout(new BorderLayout());
         add(new SelectPanel(loadImages(boardsDir), onSelectBoard));
     }
