@@ -4,10 +4,11 @@ import board.Board;
 import ui.display.BoardUI;
 
 import javax.swing.*;
+import java.time.Duration;
 
 public class BoardUITest {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Board board = new Board(new int[][]{
                 {0, 0, 0, 0},
                 {0, 1, 1, 1},
@@ -24,5 +25,7 @@ public class BoardUITest {
 
         boardUI.setBoard(board);
 
+        Thread.sleep(5000);
+        boardUI.setUpdateInterval(Duration.ofMillis(2000)); // 允许动态变更间隔
     }
 }
