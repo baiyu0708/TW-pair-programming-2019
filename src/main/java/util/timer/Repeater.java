@@ -25,19 +25,8 @@ public class Repeater {
         if (executeImmediately) {
             task.run();
         }
-        startTimeMs = System.currentTimeMillis();
 
-        timer = new Thread(() -> {
-            while (true) {
-                try {
-                    Thread.sleep(interval.toMillis());
-                } catch (InterruptedException e) {
-                    break;
-                }
-                task.run();
-                startTimeMs = System.currentTimeMillis();
-            }
-        });
+        timer = new Thread(this::loopUntilInterrupted);
         timer.start();
     }
 
@@ -59,32 +48,26 @@ public class Repeater {
                 } catch (InterruptedException e) {
                     return;
                 }
-                startTimeMs = System.currentTimeMillis();
+                task.run();
 
-                while (true) {
-                    try {
-                        Thread.sleep(interval.toMillis());
-                    } catch (InterruptedException e) {
-                        break;
-                    }
-                    task.run();
-                    startTimeMs = System.currentTimeMillis();
-                }
+                loopUntilInterrupted();
             });
             timer.start();
         } else {
             task.run();
-            startTimeMs = System.currentTimeMillis();
+            loopUntilInterrupted();
+        }
+    }
 
-            while (true) {
-                try {
-                    Thread.sleep(interval.toMillis());
-                } catch (InterruptedException e) {
-                    break;
-                }
-                task.run();
-                startTimeMs = System.currentTimeMillis();
+    private void loopUntilInterrupted() {
+        while (true) {
+            startTimeMs = System.currentTimeMillis();
+            try {
+                Thread.sleep(interval.toMillis());
+            } catch (InterruptedException e) {
+                break;
             }
+            task.run();
         }
     }
 }
