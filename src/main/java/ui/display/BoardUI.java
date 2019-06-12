@@ -18,6 +18,7 @@ public class BoardUI extends JPanel {
     private Board board;
 
     private final Repeater updateRepeater;
+    private boolean isPlaying = false;
 
     public BoardUI() {
         setLayout(new BorderLayout());
@@ -25,7 +26,6 @@ public class BoardUI extends JPanel {
         add(createControlPanel(), BorderLayout.EAST);
 
         updateRepeater = new Repeater(this::update, Duration.ofMillis(500));
-        updateRepeater.start(false);
     }
 
     private JPanel createControlPanel() {
@@ -34,7 +34,7 @@ public class BoardUI extends JPanel {
 
         panel.add(new JLabel("播放速率（秒）："));
         panel.add(playRateSpinner());
-        panel.add(new JButton("播放/停止"));
+        panel.add(playStopButton());
 
         return panel;
     }
@@ -46,6 +46,24 @@ public class BoardUI extends JPanel {
             updateRepeater.setInterval(interval);
         });
         return spinner;
+    }
+
+    private JButton playStopButton() {
+        final String textWhileNotPlaying = "播放□/停止√";
+        final String textWhilePlaying = "播放√/停止□";
+
+        JButton button = new JButton(textWhileNotPlaying);
+        button.addActionListener(e -> {
+            if (isPlaying) {
+                button.setText(textWhileNotPlaying);
+                updateRepeater.stop();
+            } else {
+                button.setText(textWhilePlaying);
+                updateRepeater.start(true);
+            }
+            isPlaying = !isPlaying;
+        });
+        return button;
     }
 
     private void update() {

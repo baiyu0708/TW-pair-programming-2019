@@ -16,12 +16,16 @@ public class Repeater {
     private long startTimeMs;
     private Thread timer;
 
+    private boolean running = false;
+
     public Repeater(Runnable task, Duration interval) {
         this.task = task;
         this.interval = interval;
     }
 
     public void start(boolean executeImmediately) {
+        running = true;
+
         if (executeImmediately) {
             task.run();
         }
@@ -31,12 +35,18 @@ public class Repeater {
     }
 
     public void stop() {
+        running = false;
+
         timer.interrupt();
     }
 
     public void setInterval(Duration newInterval) {
-        timer.interrupt();
         this.interval = newInterval;
+        if (!running) {
+            return;
+        }
+
+        timer.interrupt();
 
         long durationSinceStartMs = System.currentTimeMillis() - startTimeMs;
         long remainingIntervalMs = newInterval.toMillis() - durationSinceStartMs;
