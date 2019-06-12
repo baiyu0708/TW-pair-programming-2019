@@ -3,9 +3,12 @@ package ui.load;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 
 class LoadUI extends JPanel {
 
@@ -23,11 +26,23 @@ class LoadUI extends JPanel {
         }
 
         ArrayList<BoardItem> images = new ArrayList<>(imageFiles.length);
-        images.add(loadImageOrNull(new File("res/load/新建.png")));
+        images.add(new BoardItem(emptyImage(), "新建"));
         for (File file : imageFiles) {
             images.add(loadImageOrNull(file));
         }
         return images;
+    }
+
+    private BufferedImage emptyImage() {
+        int width = 5;
+        int height = 5;
+        BufferedImage image = new BufferedImage(width, height, TYPE_INT_RGB);
+        for (int row = 0; row < height; row++) {
+            for (int column = 0; column < width; column++) {
+                image.setRGB(row, column, Color.white.getRGB());
+            }
+        }
+        return image;
     }
 
     private static BoardItem loadImageOrNull(File file) {
