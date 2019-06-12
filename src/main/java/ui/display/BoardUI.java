@@ -3,6 +3,7 @@ package ui.display;
 import board.Board;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ui.BoardDisplayPanel;
 
 import javax.swing.*;
 import java.awt.*;

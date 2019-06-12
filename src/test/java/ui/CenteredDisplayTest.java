@@ -1,7 +1,7 @@
-package ui.display;
+package ui;
 
 import org.junit.Test;
-import ui.display.CenteredDisplay;
+import ui.CenteredDisplay;
 
 import java.awt.*;
 

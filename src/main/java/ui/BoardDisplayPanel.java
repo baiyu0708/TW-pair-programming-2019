@@ -1,4 +1,4 @@
-package ui.display;
+package ui;
 
 import board.Board;
 import org.jetbrains.annotations.Nullable;
@@ -12,7 +12,7 @@ import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 /**
  * 居中显示{@link Board}的状态
  */
-class BoardDisplayPanel extends JPanel {
+public class BoardDisplayPanel extends JPanel {
 
     private static final Color DEAD_CELL_COLOR = Color.white;
     private static final Color LIVING_CELL_COLOR = Color.black;
@@ -20,8 +20,8 @@ class BoardDisplayPanel extends JPanel {
     @Nullable
     private volatile BufferedImage image;
 
-    void display(Board board) {
-        this.image = createImage(board);
+    public void display(@Nullable Board board) {
+        this.image = board != null ? createImage(board) : null;
         repaint();
     }
 

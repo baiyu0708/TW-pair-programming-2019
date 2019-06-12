@@ -3,6 +3,8 @@ package board;
 import org.junit.Test;
 import util.file.CodeDir;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -13,9 +15,9 @@ public class BoardIOTest {
     @Test
     public void load_board_state_from_file() throws IOException {
         CodeDir root = new CodeDir(CodeDir.MAVEN_TEST);
-        File stateFile = root.child("state.png");
+        BufferedImage image = ImageIO.read(root.child("state.png"));
 
-        int[][] state = BoardIO.read(stateFile);
+        int[][] state = BoardIO.readState(image);
 
         assertArrayEquals(new int[][]{
                 {0, 0, 0, 0},
