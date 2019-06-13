@@ -18,6 +18,8 @@ public class BoardUI extends JPanel {
 
     private final BoardDisplayPanel boardDisplayPanel = new BoardDisplayPanel();
     private final Consumer<Board> onSave;
+    private EditModePanel editModePanel;
+
     private final Runnable onReturn;
     @Nullable // 当用户还没有选择要显示的board时，该字段为null
     private Board board;
@@ -33,7 +35,7 @@ public class BoardUI extends JPanel {
         add(boardDisplayPanel);
         add(createControlPanel(), BorderLayout.EAST);
 
-        boardDisplayPanel.setCellClickListener(this::flipCell);
+        boardDisplayPanel.setCellClickListener(this::editCell);
         updateRepeater = new Repeater(this::update, Duration.ofMillis((long) (INITIAL_UPDATE_INTERVAL_SEC * 1000)));
     }
 
@@ -44,9 +46,12 @@ public class BoardUI extends JPanel {
         panel.add(new JLabel("更新间隔（秒）："));
         panel.add(playRateSpinner());
         panel.add(playStopButton());
+        panel.add(new JLabel("编辑模式"));
+        editModePanel = new EditModePanel();
+        panel.add(editModePanel);
+        panel.add(new JLabel("文件"));
         panel.add(saveButton());
         panel.add(returnButton());
-
         return panel;
     }
 
@@ -97,12 +102,25 @@ public class BoardUI extends JPanel {
         boardDisplayPanel.display(board);
     }
 
-    private void flipCell(Point point) {
+    private void editCell(Point point) {
         if (board == null) {
             return;
         }
 
-        board.flip(point.y, point.x);
+        switch (editModePanel.mode()) {
+            case EditModePanel.FLIP:
+                board.flip(point.y, point.x);
+                break;
+            case EditModePanel.PENCIL:
+                board.setLiving(point.y, point.x);
+                break;
+            case EditModePanel.ERASER:
+                board.setDead(point.y, point.x);
+                break;
+            default:
+                throw new IllegalStateException();
+        }
+
         boardDisplayPanel.display(board);
     }
 

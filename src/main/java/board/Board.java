@@ -35,6 +35,14 @@ public class Board {
         state[row][column] = isLiving(row, column) ? DEAD : LIVING;
     }
 
+    public void setLiving(int row, int column) {
+        state[row][column] = LIVING;
+    }
+
+    public void setDead(int row, int column) {
+        state[row][column] = DEAD;
+    }
+
     private int nextState(int row, int column) {
         boolean isAlive = isLiving(row, column);
 
@@ -65,7 +73,7 @@ public class Board {
         return state[row][column];
     }
 
-    public boolean isLiving(int row, int column) {
+    boolean isLiving(int row, int column) {
         return state(row, column) == LIVING;
     }
 
