@@ -27,6 +27,7 @@ public class GameOfLifeApp {
 
         loadUI = new LoadUI(boardsDir, this::jumpToBoardUI);
         loadWindow = createWindow(loadUI, 1024, 768);
+        loadWindow.setTitle("Game of Life");
         boardUI = new BoardUI(this::save, this::jumpToLoadUI);
         boardWindow = createWindow(boardUI, 1600, 900);
 
