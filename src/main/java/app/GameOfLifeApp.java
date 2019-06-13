@@ -1,10 +1,15 @@
 package app;
 
+import board.Board;
+import board.BoardImage;
 import ui.board.BoardUI;
 import ui.load.BoardDesc;
 import ui.load.LoadUI;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -14,10 +19,16 @@ public class GameOfLifeApp {
     private final JFrame boardWindow;
     private final BoardUI boardUI;
 
-    public GameOfLifeApp(File boardsDir) throws IOException {
-        loadWindow = createWindow(new LoadUI(boardsDir, this::jumpToBoardUI), 1024, 768);
+    private final File boardsDir;
 
-        boardUI = new BoardUI();
+    public GameOfLifeApp(File boardsDir) throws IOException {
+        this.boardsDir = boardsDir;
+
+        loadWindow = createWindow(new LoadUI(boardsDir, this::jumpToBoardUI), 1024, 768);
+        boardUI = new BoardUI(this::save,
+                () -> {
+                }
+        );
         boardWindow = createWindow(boardUI, 1600, 900);
 
         loadWindow.setVisible(true);
@@ -39,5 +50,47 @@ public class GameOfLifeApp {
 
         loadWindow.setVisible(false);
         boardWindow.setVisible(true);
+    }
+
+    private void save(Board board) {
+        JFileChooser fileChooser = new JFileChooser(boardsDir);
+        fileChooser.setFileFilter(new PngFileFilter());
+        fileChooser.showDialog(boardWindow, "保存");
+
+        File file = fileChooser.getSelectedFile();
+        file = asPng(file);
+        save(board, file);
+    }
+
+    private void save(Board board, File path) {
+        BufferedImage image = BoardImage.encode(board);
+        try {
+            ImageIO.write(image, "png", path);
+        } catch (IOException ignored) {
+        }
+    }
+
+    private File asPng(File file) {
+        if (!isPng(file)) {
+            file = new File(file.getAbsolutePath() + ".png");
+        }
+        return file;
+    }
+
+    private static boolean isPng(File f) {
+        return f.getName().endsWith(".png");
+    }
+
+    private static class PngFileFilter extends FileFilter {
+
+        @Override
+        public boolean accept(File f) {
+            return isPng(f);
+        }
+        @Override
+        public String getDescription() {
+            return "图像（.png）";
+        }
+
     }
 }
