@@ -1,7 +1,7 @@
 package ui.load;
 
 import board.Board;
-import board.BoardIO;
+import board.BoardImage;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -38,7 +38,7 @@ public class LoadUI extends JPanel {
 
     private static BoardDesc loadOrNull(File file) {
         try {
-            return new BoardDesc(BoardIO.readState(ImageIO.read(file)), file.getName());
+            return new BoardDesc(BoardImage.parse(ImageIO.read(file)), file.getName());
         } catch (IOException e) {
             return new BoardDesc(null, file.getName());
         }
