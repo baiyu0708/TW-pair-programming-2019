@@ -13,9 +13,14 @@ import java.util.function.Consumer;
 
 public class LoadUI extends JPanel {
 
+    private final SelectPanel selectPanel;
+    private final File boardsDir;
+
     public LoadUI(File boardsDir, Consumer<BoardDesc> onSelectBoard) throws IOException {
         setLayout(new BorderLayout());
-        add(new SelectPanel(loadImages(boardsDir), onSelectBoard));
+        this.boardsDir = boardsDir;
+        selectPanel = new SelectPanel(loadImages(this.boardsDir), onSelectBoard);
+        add(selectPanel);
     }
 
     private ArrayList<BoardDesc> loadImages(File boardsDir) throws IOException {
@@ -41,6 +46,13 @@ public class LoadUI extends JPanel {
             return new BoardDesc(BoardImage.parse(ImageIO.read(file)), file.getName());
         } catch (IOException e) {
             return new BoardDesc(null, file.getName());
+        }
+    }
+
+    public void reload(){
+        try {
+            selectPanel.setItems(loadImages(boardsDir));
+        } catch (IOException ignored) {
         }
     }
 }

@@ -11,7 +11,7 @@ class SelectPanel extends JPanel {
     private static final int BOARD_COUNT_PER_PAGE = 10;
     private static final int BOARD_COUNT_PER_ROW = 2;
 
-    private final ArrayList<BoardDesc> items;
+    private ArrayList<BoardDesc> items;
     private final BoardItemPanel[] boardItemPanels;
 
     private int startIndex = 0;
@@ -26,6 +26,11 @@ class SelectPanel extends JPanel {
             add(boardItemPanels[i]);
         }
 
+        display();
+    }
+
+    void setItems(List<BoardDesc> items) {
+        this.items = new ArrayList<>(items);
         display();
     }
 

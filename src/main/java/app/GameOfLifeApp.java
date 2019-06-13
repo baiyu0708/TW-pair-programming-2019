@@ -16,6 +16,7 @@ import java.io.IOException;
 public class GameOfLifeApp {
 
     private final JFrame loadWindow;
+    private final LoadUI loadUI;
     private final JFrame boardWindow;
     private final BoardUI boardUI;
 
@@ -24,7 +25,8 @@ public class GameOfLifeApp {
     public GameOfLifeApp(File boardsDir) throws IOException {
         this.boardsDir = boardsDir;
 
-        loadWindow = createWindow(new LoadUI(boardsDir, this::jumpToBoardUI), 1024, 768);
+        loadUI = new LoadUI(boardsDir, this::jumpToBoardUI);
+        loadWindow = createWindow(loadUI, 1024, 768);
         boardUI = new BoardUI(this::save, this::jumpToLoadUI);
         boardWindow = createWindow(boardUI, 1600, 900);
 
@@ -42,15 +44,16 @@ public class GameOfLifeApp {
     private void jumpToBoardUI(BoardDesc board) {
         assert board.board != null;
 
+        loadWindow.setVisible(false);
+
         boardWindow.setTitle(board.name);
         boardUI.setBoard(board.board);
-
-        loadWindow.setVisible(false);
         boardWindow.setVisible(true);
     }
 
     private void jumpToLoadUI() {
         boardWindow.setVisible(false);
+        loadUI.reload();
         loadWindow.setVisible(true);
     }
 
