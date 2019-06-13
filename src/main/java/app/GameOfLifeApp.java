@@ -25,10 +25,7 @@ public class GameOfLifeApp {
         this.boardsDir = boardsDir;
 
         loadWindow = createWindow(new LoadUI(boardsDir, this::jumpToBoardUI), 1024, 768);
-        boardUI = new BoardUI(this::save,
-                () -> {
-                }
-        );
+        boardUI = new BoardUI(this::save, this::jumpToLoadUI);
         boardWindow = createWindow(boardUI, 1600, 900);
 
         loadWindow.setVisible(true);
@@ -52,12 +49,21 @@ public class GameOfLifeApp {
         boardWindow.setVisible(true);
     }
 
+    private void jumpToLoadUI() {
+        boardWindow.setVisible(false);
+        loadWindow.setVisible(true);
+    }
+
     private void save(Board board) {
         JFileChooser fileChooser = new JFileChooser(boardsDir);
         fileChooser.setFileFilter(new PngFileFilter());
         fileChooser.showDialog(boardWindow, "保存");
 
         File file = fileChooser.getSelectedFile();
+        if (file == null) {
+            return;
+        }
+
         file = asPng(file);
         save(board, file);
     }
@@ -87,6 +93,7 @@ public class GameOfLifeApp {
         public boolean accept(File f) {
             return isPng(f);
         }
+
         @Override
         public String getDescription() {
             return "图像（.png）";
