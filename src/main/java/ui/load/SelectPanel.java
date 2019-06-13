@@ -34,6 +34,24 @@ class SelectPanel extends JPanel {
         display();
     }
 
+    void nextPage() {
+        startIndex += BOARD_COUNT_PER_PAGE;
+        display();
+    }
+
+    boolean hasNextPage() {
+        return startIndex + BOARD_COUNT_PER_PAGE < items.size();
+    }
+
+    void prevPage() {
+        startIndex -= BOARD_COUNT_PER_PAGE;
+        display();
+    }
+
+    boolean hasPrevPage() {
+        return startIndex - BOARD_COUNT_PER_PAGE >= 0;
+    }
+
     private void display() {
         // offset：当前页面所显示的第几张图像
         for (int offset = 0; offset < BOARD_COUNT_PER_PAGE; offset++) {

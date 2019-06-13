@@ -14,13 +14,18 @@ import java.util.function.Consumer;
 public class LoadUI extends JPanel {
 
     private final SelectPanel selectPanel;
+    private JButton prevButton;
+    private JButton nextButton;
+
     private final File boardsDir;
 
     public LoadUI(File boardsDir, Consumer<BoardDesc> onSelectBoard) throws IOException {
-        setLayout(new BorderLayout());
         this.boardsDir = boardsDir;
+
+        setLayout(new BorderLayout());
         selectPanel = new SelectPanel(loadImages(this.boardsDir), onSelectBoard);
         add(selectPanel);
+        add(controlPanel(), BorderLayout.SOUTH);
     }
 
     private ArrayList<BoardDesc> loadImages(File boardsDir) throws IOException {
@@ -53,10 +58,36 @@ public class LoadUI extends JPanel {
         }
     }
 
-    public void reload(){
+    private JPanel controlPanel() {
+        prevButton = new JButton("上一页");
+        prevButton.addActionListener(e->{
+            selectPanel.prevPage();
+            updatePageButton();
+        });
+
+        nextButton = new JButton("下一页");
+        nextButton.addActionListener(e -> {
+            selectPanel.nextPage();
+            updatePageButton();
+        });
+
+        JPanel panel = new JPanel();
+        panel.add(prevButton);
+        panel.add(nextButton);
+        updatePageButton();
+        return panel;
+    }
+
+    public void reload() {
         try {
             selectPanel.setItems(loadImages(boardsDir));
         } catch (IOException ignored) {
         }
+        updatePageButton();
+    }
+
+    private void updatePageButton() {
+        prevButton.setEnabled(selectPanel.hasPrevPage());
+        nextButton.setEnabled(selectPanel.hasNextPage());
     }
 }
