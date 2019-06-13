@@ -30,15 +30,19 @@ public class LoadUI extends JPanel {
         }
 
         ArrayList<BoardDesc> images = new ArrayList<>(imageFiles.length);
-        images.add(new BoardDesc(emptyBoard(), "新建"));
+        images.add(new BoardDesc(emptyBoard(3, 3), "新建3*3"));
+        images.add(new BoardDesc(emptyBoard(5, 5), "新建5*5"));
+        images.add(new BoardDesc(emptyBoard(10, 10), "新建10*10"));
+        images.add(new BoardDesc(emptyBoard(20, 20), "新建20*20"));
+        images.add(new BoardDesc(emptyBoard(50, 50), "新建50*50"));
         for (File file : imageFiles) {
             images.add(loadOrNull(file));
         }
         return images;
     }
 
-    private Board emptyBoard() {
-        return new Board(new int[5][5]);
+    private Board emptyBoard(int rowCount, int columnCount) {
+        return new Board(new int[rowCount][columnCount]);
     }
 
     private static BoardDesc loadOrNull(File file) {
