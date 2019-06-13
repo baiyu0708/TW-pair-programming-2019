@@ -35,6 +35,10 @@ public class Repeater {
     }
 
     public void stop() {
+        if (!running) {
+            return;
+        }
+
         running = false;
 
         timer.interrupt();

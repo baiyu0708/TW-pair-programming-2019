@@ -27,6 +27,10 @@ public class BoardUI extends JPanel {
     private final Repeater updateRepeater;
     private boolean isPlaying = false;
 
+    private static final String TEXT_WHILE_NOT_PLAYING = "播放□/停止√";
+    private static final String TEXT_WHILE_PLAYING = "播放√/停止□";
+    private JButton playStopButton;
+
     public BoardUI(Consumer<Board> onSave, Runnable onReturn) {
         this.onSave = onSave;
         this.onReturn = onReturn;
@@ -65,21 +69,27 @@ public class BoardUI extends JPanel {
     }
 
     private JButton playStopButton() {
-        final String textWhileNotPlaying = "播放□/停止√";
-        final String textWhilePlaying = "播放√/停止□";
-
-        JButton button = new JButton(textWhileNotPlaying);
-        button.addActionListener(e -> {
+        playStopButton = new JButton(TEXT_WHILE_NOT_PLAYING);
+        playStopButton.addActionListener(e -> {
             if (isPlaying) {
-                button.setText(textWhileNotPlaying);
-                updateRepeater.stop();
+                stop();
             } else {
-                button.setText(textWhilePlaying);
-                updateRepeater.start(true);
+                play();
             }
-            isPlaying = !isPlaying;
         });
-        return button;
+        return playStopButton;
+    }
+
+    private void play() {
+        playStopButton.setText(TEXT_WHILE_PLAYING);
+        updateRepeater.start(true);
+        isPlaying = true;
+    }
+
+    public void stop() {
+        playStopButton.setText(TEXT_WHILE_NOT_PLAYING);
+        updateRepeater.stop();
+        isPlaying = false;
     }
 
     private JButton saveButton() {

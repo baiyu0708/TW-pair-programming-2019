@@ -49,6 +49,7 @@ public class GameOfLifeApp {
 
         boardWindow.setTitle(board.name);
         boardUI.setBoard(board.board);
+        boardUI.stop();
         boardWindow.setVisible(true);
     }
 
