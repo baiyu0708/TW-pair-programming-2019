@@ -13,7 +13,10 @@ public class BoardUITest {
                 {1, 1, 1, 0},
                 {0, 0, 0, 0}
         });
-        BoardUI boardUI = new BoardUI();
+        BoardUI boardUI = new BoardUI(
+                savedBoard -> System.out.println("保存：" + savedBoard.rowCount() + "行，" + savedBoard.columnCount() + "列"),
+                () -> System.out.println("返回")
+        );
 
         JFrame window = new JFrame();
         window.setSize(640, 480);

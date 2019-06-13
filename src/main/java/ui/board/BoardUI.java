@@ -10,19 +10,25 @@ import util.ui.VFlowLayout;
 import javax.swing.*;
 import java.awt.*;
 import java.time.Duration;
+import java.util.function.Consumer;
 
 public class BoardUI extends JPanel {
 
     private static final float INITIAL_UPDATE_INTERVAL_SEC = 0.5f;
 
     private final BoardDisplayPanel boardDisplayPanel = new BoardDisplayPanel();
+    private final Consumer<Board> onSave;
+    private final Runnable onReturn;
     @Nullable // 当用户还没有选择要显示的board时，该字段为null
     private Board board;
 
     private final Repeater updateRepeater;
     private boolean isPlaying = false;
 
-    public BoardUI() {
+    public BoardUI(Consumer<Board> onSave, Runnable onReturn) {
+        this.onSave = onSave;
+        this.onReturn = onReturn;
+
         setLayout(new BorderLayout());
         add(boardDisplayPanel);
         add(createControlPanel(), BorderLayout.EAST);
@@ -38,6 +44,8 @@ public class BoardUI extends JPanel {
         panel.add(new JLabel("更新间隔（秒）："));
         panel.add(playRateSpinner());
         panel.add(playStopButton());
+        panel.add(saveButton());
+        panel.add(returnButton());
 
         return panel;
     }
@@ -66,6 +74,18 @@ public class BoardUI extends JPanel {
             }
             isPlaying = !isPlaying;
         });
+        return button;
+    }
+
+    private JButton saveButton() {
+        JButton button = new JButton("保存");
+        button.addActionListener(e -> onSave.accept(board));
+        return button;
+    }
+
+    private JButton returnButton() {
+        JButton button = new JButton("返回");
+        button.addActionListener(e -> onReturn.run());
         return button;
     }
 
