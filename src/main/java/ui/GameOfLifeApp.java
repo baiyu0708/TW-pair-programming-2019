@@ -1,4 +1,4 @@
-package app;
+package ui;
 
 import board.Board;
 import board.BoardImage;

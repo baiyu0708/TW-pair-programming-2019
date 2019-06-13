@@ -1,5 +1,6 @@
-package app;
+package ui;
 
+import ui.GameOfLifeApp;
 import util.file.CodeDir;
 
 import java.io.IOException;

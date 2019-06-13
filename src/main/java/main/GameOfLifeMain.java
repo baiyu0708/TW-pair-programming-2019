@@ -1,6 +1,6 @@
 package main;
 
-import app.GameOfLifeApp;
+import ui.GameOfLifeApp;
 import util.ui.UIFonts;
 
 import java.awt.*;
